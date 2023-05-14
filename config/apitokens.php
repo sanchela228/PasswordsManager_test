@@ -1,0 +1,5 @@
+<?php
+
+return [
+    "0KLQtdGB0YLQvtCy0YvQuSDRgtC+0LrQtdC9INCx0L7Qu9GM0YnQvtC5INC10YnQtSDQsNGL0YTQsg"
+];
