@@ -1,4 +1,4 @@
-@extends("layout.login")
+@extends("layout.main")
 
 @section('title', "Authorization")
 

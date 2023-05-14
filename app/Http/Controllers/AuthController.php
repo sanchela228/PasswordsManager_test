@@ -30,7 +30,7 @@ class AuthController extends Controller
 
     public function Logout(Request $request)
     {
-        if (Auth::user()->getAuthIdentifier() > 0) Auth::logout();
+        if (Auth::user()) Auth::logout();
 
         return redirect( route("login"));
     }
