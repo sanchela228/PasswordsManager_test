@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +12,8 @@ class PasswordsController extends Controller
 {
     public function View()
     {
-        return view('passwords');
+        $group = Group::find( Auth::user()->group_id );
+
+        return view('passwords', ['group' => $group]);
     }
 }
