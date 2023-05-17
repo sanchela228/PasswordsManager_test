@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import Password from './Password'
+import Search from './Search'
 
 class Passwords extends React.Component
 {
@@ -7,10 +9,17 @@ class Passwords extends React.Component
     {
         super(...args);
         this.state = {
-            passwords: null
+            originalPasswords: null,
+            searchText: ""
         }
 
         this.handleClick = this.handleClick.bind(this);
+        this.searchInput = this.searchInput.bind(this);
+    }
+
+    searchInput( e )
+    {
+        this.setState( { searchText: e.target.value.toLocaleLowerCase() } );
     }
 
     async getPasswordsList()
@@ -19,12 +28,29 @@ class Passwords extends React.Component
         return await get;
     }
 
+    filterListPassword()
+    {
+        let filteredElements = this.state.originalPasswords;
+
+        if (this.state.searchText)
+            filteredElements = this.state.originalPasswords.filter(
+                pass => { return pass.props.name.indexOf( this.state.searchText ) !== -1 }
+            );
+
+        return filteredElements;
+    }
+
     componentDidMount()
     {
-        if (!this.state.passwords)
+        if (!this.state.originalPasswords)
         {
             this.getPasswordsList().then(
-                passwords => this.setState({ passwords: passwords.data.data })
+                passwords => this.setState({ originalPasswords: passwords.data.data.map(pass =>
+                    <Password
+                        key={pass.id}
+                        name={pass.name}
+                    />
+                )})
             );
         }
     }
@@ -34,12 +60,20 @@ class Passwords extends React.Component
         console.log(this.state)
     }
 
+
+
     render()
-    { return(
-        <div onClick={this.handleClick} className="test">
-            test
-        </div>
-    )}
+    {
+        return(
+            <>
+                <Search input={this.searchInput}/>
+                <section onClick={this.handleClick} className="password-list-field">
+                    {this.filterListPassword()}
+                </section>
+            </>
+
+        )
+    }
 }
 
 export default Passwords;

@@ -12,5 +12,8 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/index.js', 'public/js').react();
-mix.js('resources/js/components/passwords.js', 'public/js/components/').react();
+mix.js('resources/js/components/passwords.jsx', 'public/js/components/').react();
+mix.js('resources/js/components/password.jsx', 'public/js/components/').react();
+mix.js('resources/js/components/search.jsx', 'public/js/components/').react();
 
+mix.sass('resources/sass/passwords.scss', 'public/css');

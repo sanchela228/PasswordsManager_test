@@ -20,7 +20,7 @@ class Passwords extends \App\Http\Controllers\Controller
             'creator_id' => 'int|required|exists:users,id',
             'name' => 'string|required|max:48',
             'link' => 'string|required|max:256',
-            'login' => 'string|required|max:36',
+            'login' => 'string|required|max:48',
             'password' => 'string|required|max:256',
             'comment' => 'string|max:256',
         ]);

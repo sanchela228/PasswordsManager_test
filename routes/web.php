@@ -19,9 +19,9 @@ Route::get('/', function () {
 
 Route::get('/login', [\App\Http\Controllers\AuthController::class, 'ViewLogin'])->name('login');
 Route::post('/login/auth', [\App\Http\Controllers\AuthController::class, 'Login'])->name('login/auth');
-Route::post('/login/logout', [\App\Http\Controllers\AuthController::class, 'Logout'])->name('login/logout');
+Route::get('/login/logout', [\App\Http\Controllers\AuthController::class, 'Logout'])->name('login/logout');
 
 
-Route::get('/passwords', [\App\Http\Controllers\PasswordsController::class, 'View'])->name('view');
+Route::middleware('auth')->get('/passwords', [\App\Http\Controllers\PasswordsController::class, 'View'])->name('view');
 
 
