@@ -49,6 +49,7 @@ class Passwords extends React.Component
                     <Password
                         key={pass.id}
                         name={pass.name}
+                        link={pass.link}
                     />
                 )})
             );
