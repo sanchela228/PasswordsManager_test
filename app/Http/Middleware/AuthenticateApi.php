@@ -8,13 +8,9 @@ class AuthenticateApi extends Middleware
 {
     protected function Authenticate( $request, array $guards)
     {
-        if ( !Auth::user() )
-        {
-            $token = $request->bearerToken();
-            if ( in_array($token, config('apitokens')) ) return;
-        }
-        else return;
-
+        $token = $request->bearerToken();
+        if ( in_array($token, config('apitokens')) ) return;
+        
         $this->unauthenticated($request, $guards);
     }
 }

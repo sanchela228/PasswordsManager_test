@@ -13,7 +13,6 @@ class Passwords extends React.Component
             searchText: ""
         }
 
-        this.handleClick = this.handleClick.bind(this);
         this.searchInput = this.searchInput.bind(this);
     }
 
@@ -56,19 +55,12 @@ class Passwords extends React.Component
         }
     }
 
-    handleClick()
-    {
-        console.log(this.state)
-    }
-
-
-
     render()
     {
         return(
             <>
                 <Search input={this.searchInput}/>
-                <section onClick={this.handleClick} className="password-list-field">
+                <section className="password-list-field">
                     {this.filterListPassword()}
                 </section>
             </>
