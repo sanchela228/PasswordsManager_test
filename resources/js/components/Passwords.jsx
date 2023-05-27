@@ -10,10 +10,12 @@ class Passwords extends React.Component
         super(...args);
         this.state = {
             originalPasswords: null,
-            searchText: ""
+            searchText: "",
+            openContext: false
         }
 
         this.searchInput = this.searchInput.bind(this);
+        this.openPassword = this.openPassword.bind(this);
     }
 
     searchInput( e )
@@ -23,7 +25,7 @@ class Passwords extends React.Component
 
     async getPasswordsList()
     {
-        const get = await axios('/api/passwords/list');
+        const get = await axios('/web/passwords/list');
         return await get;
     }
 
@@ -39,13 +41,22 @@ class Passwords extends React.Component
         return filteredElements;
     }
 
+    openPassword( id )
+    {
+        this.setState( { openContext: true } );
+    }
+
     componentDidMount()
     {
         if (!this.state.originalPasswords)
         {
+            let thisObj = this;
+
             this.getPasswordsList().then(
                 passwords => this.setState({ originalPasswords: passwords.data.data.map(pass =>
                     <Password
+                        click={thisObj.openPassword}
+                        item={pass.id}
                         key={pass.id}
                         name={pass.name}
                         link={pass.link}
@@ -59,12 +70,16 @@ class Passwords extends React.Component
     {
         return(
             <>
-                <Search input={this.searchInput}/>
-                <section className="password-list-field">
-                    {this.filterListPassword()}
+                <section className={this.state.openContext ? "field with-context" : "field"}>
+                    <Search input={this.searchInput}/>
+                    <section className="password-list-field">
+                        {this.filterListPassword()}
+                    </section>
+                </section>
+                <section className="context">
+                    
                 </section>
             </>
-
         )
     }
 }

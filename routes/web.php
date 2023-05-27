@@ -24,4 +24,5 @@ Route::get('/login/logout', [\App\Http\Controllers\AuthController::class, 'Logou
 
 Route::middleware('auth')->get('/passwords', [\App\Http\Controllers\PasswordsController::class, 'View'])->name('view');
 
-
+# Web api
+Route::get('/web/passwords/list', [\App\Http\Controllers\Web\Passwords::class, 'List']);
