@@ -1828,19 +1828,15 @@ var Password = /*#__PURE__*/function (_React$Component) {
     }
     _this = _super.call.apply(_super, [this].concat(args));
     _this.state = {
-      isHovered: false
+      isHovered: false,
+      isOpen: false
     };
     _this.changeHoverStatus = _this.changeHoverStatus.bind(_assertThisInitialized(_this));
     _this.openHandler = _this.openHandler.bind(_assertThisInitialized(_this));
-    _this.openSet = _this.openSet.bind(_assertThisInitialized(_this));
+    _this.toggleOpen = _this.toggleOpen.bind(_assertThisInitialized(_this));
     return _this;
   }
   _createClass(Password, [{
-    key: "openSet",
-    value: function openSet() {
-      this.props.isOpen = true;
-    }
-  }, {
     key: "changeHoverStatus",
     value: function changeHoverStatus() {
       this.setState({
@@ -1848,8 +1844,22 @@ var Password = /*#__PURE__*/function (_React$Component) {
       });
     }
   }, {
+    key: "toggleOpen",
+    value: function toggleOpen(boolStatus) {
+      // console.log(boolStatus)
+      this.setState(function (state, props) {
+        return {
+          isOpen: boolStatus
+        };
+      });
+
+      // console.log(this)
+    }
+  }, {
     key: "openHandler",
     value: function openHandler() {
+      // this.setState({ isOpen: true });
+
       this.props.click(this.props.item);
     }
   }, {
@@ -1865,7 +1875,7 @@ var Password = /*#__PURE__*/function (_React$Component) {
             className: "big-word",
             children: this.props.name.substring(0, 1)
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
-            className: this.props.openProduct == this.props.item ? "text open" : "text",
+            className: this.state.isOpen ? "text open" : "text",
             children: this.props.name
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("span", {
             className: "icons",
@@ -1965,6 +1975,7 @@ var Passwords = /*#__PURE__*/function (_React$Component) {
       openContext: false,
       openProduct: false
     };
+    _this.test = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createRef();
     _this.searchInput = _this.searchInput.bind(_assertThisInitialized(_this));
     _this.openPassword = _this.openPassword.bind(_assertThisInitialized(_this));
     return _this;
@@ -2008,19 +2019,12 @@ var Passwords = /*#__PURE__*/function (_React$Component) {
     value: function filterListPassword() {
       var _this2 = this;
       var filteredElements = this.state.originalPasswords;
-      console.log(filteredElements);
-
-      // if (this.state.openProduct > 0)
-      // {
-      //     let idOpenProduct = this.state.openProduct;
-      //     filteredElements.forEach( function(item, index, array)
-      //     {
-      //         console.log(item)
-      //
-      //         if (item.props.item == idOpenProduct) item.props.item = 123;
-      //     });
-      // }
-
+      if (this.state.openProduct > 0) {
+        var idOpenProduct = this.state.openProduct;
+        filteredElements.forEach(function (item, index, array) {
+          if (item.props.item != idOpenProduct) item.ref.current.toggleOpen(false);
+        });
+      }
       if (this.state.searchText) filteredElements = this.state.originalPasswords.filter(function (pass) {
         return pass.props.name.indexOf(_this2.state.searchText) !== -1;
       });
@@ -2046,6 +2050,7 @@ var Passwords = /*#__PURE__*/function (_React$Component) {
           return _this3.setState({
             originalPasswords: passwords.data.data.map(function (pass) {
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_Password__WEBPACK_IMPORTED_MODULE_2__["default"], {
+                ref: _this3.test,
                 click: _this3.openPassword,
                 openProduct: _this3.state.openProduct,
                 item: pass.id,

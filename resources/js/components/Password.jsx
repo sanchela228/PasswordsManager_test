@@ -7,16 +7,12 @@ class Password extends React.Component
         super(...args);
         this.state = {
             isHovered: false,
+            isOpen: false,
         }
 
         this.changeHoverStatus = this.changeHoverStatus.bind(this);
         this.openHandler = this.openHandler.bind(this);
-        this.openSet = this.openSet.bind(this);
-    }
-
-    openSet()
-    {
-        this.props.isOpen = true;
+        this.toggleOpen = this.toggleOpen.bind(this);
     }
 
     changeHoverStatus()
@@ -24,8 +20,20 @@ class Password extends React.Component
         this.setState({ isHovered: !this.state.isHovered });
     }
 
+    toggleOpen( boolStatus )
+    {
+        // console.log(boolStatus)
+        this.setState((state, props) => {
+            return {isOpen: boolStatus};
+        });
+
+        // console.log(this)
+    }
+    
     openHandler()
     {
+        // this.setState({ isOpen: true });
+
         this.props.click( this.props.item );
     }
 
@@ -39,7 +47,7 @@ class Password extends React.Component
             >
                <p>
                    <span className="big-word">{this.props.name.substring(0, 1)}</span>
-                   <span className={this.props.openProduct == this.props.item ? "text open" : "text"}>{this.props.name}</span>
+                   <span className={this.state.isOpen ? "text open" : "text"}>{this.props.name}</span>
                    <span className="icons">
                        <a className="icon" href={this.props.link}>
                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">

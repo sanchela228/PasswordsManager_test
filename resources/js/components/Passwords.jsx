@@ -15,6 +15,8 @@ class Passwords extends React.Component
             openProduct: false,
         }
 
+        this.test = React.createRef();
+
         this.searchInput = this.searchInput.bind(this);
         this.openPassword = this.openPassword.bind(this);
     }
@@ -34,19 +36,14 @@ class Passwords extends React.Component
     {
         let filteredElements = this.state.originalPasswords;
 
-
-        console.log(filteredElements)
-
-        // if (this.state.openProduct > 0)
-        // {
-        //     let idOpenProduct = this.state.openProduct;
-        //     filteredElements.forEach( function(item, index, array)
-        //     {
-        //         console.log(item)
-        //
-        //         if (item.props.item == idOpenProduct) item.props.item = 123;
-        //     });
-        // }
+        if (this.state.openProduct > 0)
+        {
+            let idOpenProduct = this.state.openProduct;
+            filteredElements.forEach( function(item, index, array)
+            {
+                if (item.props.item != idOpenProduct) item.ref.current.toggleOpen( false )
+            });
+        }
 
         if (this.state.searchText)
             filteredElements = this.state.originalPasswords.filter(
@@ -70,6 +67,7 @@ class Passwords extends React.Component
             this.getPasswordsList().then(
                 passwords => this.setState({ originalPasswords: passwords.data.data.map(pass =>
                     <Password
+                        ref={this.test}
                         click={this.openPassword}
                         openProduct={this.state.openProduct}
                         item={pass.id}
