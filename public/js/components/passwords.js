@@ -1832,9 +1832,15 @@ var Password = /*#__PURE__*/function (_React$Component) {
     };
     _this.changeHoverStatus = _this.changeHoverStatus.bind(_assertThisInitialized(_this));
     _this.openHandler = _this.openHandler.bind(_assertThisInitialized(_this));
+    _this.openSet = _this.openSet.bind(_assertThisInitialized(_this));
     return _this;
   }
   _createClass(Password, [{
+    key: "openSet",
+    value: function openSet() {
+      this.props.isOpen = true;
+    }
+  }, {
     key: "changeHoverStatus",
     value: function changeHoverStatus() {
       this.setState({
@@ -1859,7 +1865,7 @@ var Password = /*#__PURE__*/function (_React$Component) {
             className: "big-word",
             children: this.props.name.substring(0, 1)
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
-            className: "text",
+            className: this.props.openProduct == this.props.item ? "text open" : "text",
             children: this.props.name
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("span", {
             className: "icons",

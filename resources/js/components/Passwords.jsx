@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import axios from 'axios';
 import Password from './Password'
 import Search from './Search'
@@ -11,7 +11,8 @@ class Passwords extends React.Component
         this.state = {
             originalPasswords: null,
             searchText: "",
-            openContext: false
+            openContext: false,
+            openProduct: false,
         }
 
         this.searchInput = this.searchInput.bind(this);
@@ -33,6 +34,20 @@ class Passwords extends React.Component
     {
         let filteredElements = this.state.originalPasswords;
 
+
+        console.log(filteredElements)
+
+        // if (this.state.openProduct > 0)
+        // {
+        //     let idOpenProduct = this.state.openProduct;
+        //     filteredElements.forEach( function(item, index, array)
+        //     {
+        //         console.log(item)
+        //
+        //         if (item.props.item == idOpenProduct) item.props.item = 123;
+        //     });
+        // }
+
         if (this.state.searchText)
             filteredElements = this.state.originalPasswords.filter(
                 pass => { return pass.props.name.indexOf( this.state.searchText ) !== -1 }
@@ -43,6 +58,7 @@ class Passwords extends React.Component
 
     openPassword( id )
     {
+        this.setState( { openProduct: id } );
         this.setState( { openContext: true } );
     }
 
@@ -51,11 +67,11 @@ class Passwords extends React.Component
         if (!this.state.originalPasswords)
         {
             let thisObj = this;
-
             this.getPasswordsList().then(
                 passwords => this.setState({ originalPasswords: passwords.data.data.map(pass =>
                     <Password
-                        click={thisObj.openPassword}
+                        click={this.openPassword}
+                        openProduct={this.state.openProduct}
                         item={pass.id}
                         key={pass.id}
                         name={pass.name}
@@ -77,7 +93,7 @@ class Passwords extends React.Component
                     </section>
                 </section>
                 <section className="context">
-                    
+
                 </section>
             </>
         )
