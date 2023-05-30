@@ -15,5 +15,8 @@ mix.js('resources/js/index.js', 'public/js').react();
 mix.js('resources/js/components/passwords.jsx', 'public/js/components/').react();
 mix.js('resources/js/components/password.jsx', 'public/js/components/').react();
 mix.js('resources/js/components/search.jsx', 'public/js/components/').react();
+mix.js('resources/js/components/watchContext.jsx', 'public/js/components/').react();
+mix.js('resources/js/components/editContext.jsx', 'public/js/components/').react();
+mix.js('resources/js/components/createContext.jsx', 'public/js/components/').react();
 
 mix.sass('resources/sass/passwords.scss', 'public/css');

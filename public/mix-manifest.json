@@ -3,5 +3,6 @@
     "/js/components/passwords.js": "/js/components/passwords.js",
     "/js/components/password.js": "/js/components/password.js",
     "/js/components/search.js": "/js/components/search.js",
+    "/js/components/watchContext.js": "/js/components/watchContext.js",
     "/css/passwords.css": "/css/passwords.css"
 }

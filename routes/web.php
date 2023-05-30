@@ -26,3 +26,4 @@ Route::middleware('auth')->get('/passwords', [\App\Http\Controllers\PasswordsCon
 
 # Web api
 Route::get('/web/passwords/list', [\App\Http\Controllers\Web\Passwords::class, 'List']);
+Route::get('/web/passwords/{id}', [\App\Http\Controllers\Web\Passwords::class, 'GetByID']);

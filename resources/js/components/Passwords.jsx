@@ -1,7 +1,8 @@
- import React from 'react';
+import React from 'react';
 import axios from 'axios';
 import Password from './Password'
 import Search from './Search'
+import WatchContext from './WatchContext'
 
 class Passwords extends React.Component
 {
@@ -13,12 +14,14 @@ class Passwords extends React.Component
             searchText: "",
             openContext: false,
             openProduct: false,
+            typeContext: "defaul",
+            componentContext: null,
         }
-
-        this.test = React.createRef();
 
         this.searchInput = this.searchInput.bind(this);
         this.openPassword = this.openPassword.bind(this);
+        this.closeContext = this.closeContext.bind(this);
+        this.getContext = this.getContext.bind(this);
     }
 
     searchInput( e )
@@ -36,14 +39,15 @@ class Passwords extends React.Component
     {
         let filteredElements = this.state.originalPasswords;
 
-        if (this.state.openProduct > 0)
-        {
-            let idOpenProduct = this.state.openProduct;
-            filteredElements.forEach( function(item, index, array)
-            {
-                if (item.props.item != idOpenProduct) item.ref.current.toggleOpen( false )
-            });
-        }
+        // if (this.state.openProduct > 0)
+        // {
+        //     let idOpenProduct = this.state.openProduct;
+        //     filteredElements.forEach( function(item, index, array)
+        //     {
+        //         if (item.props.item != idOpenProduct) item.ref.current.toggleOpen( true )
+        //
+        //     });
+        // }
 
         if (this.state.searchText)
             filteredElements = this.state.originalPasswords.filter(
@@ -53,10 +57,58 @@ class Passwords extends React.Component
         return filteredElements;
     }
 
+    getContext(name)
+    {
+        switch (name)
+        {
+            case "watch":
+                return (
+                    <WatchContext
+                        closeContext={this.closeContext}
+                        item={this.state.openProduct}
+                    />
+                )
+                break;
+
+            case "create":
+                return (
+                    <CreateContext closeContext={this.closeContext} />
+                )
+                break;
+
+            case "edit":
+                return (
+                    <EditContext
+                        closeContext={this.closeContext}
+                        item={this.state.openProduct}
+                    />
+                )
+                break;
+
+            default: return null
+        }
+
+    }
+
     openPassword( id )
     {
-        this.setState( { openProduct: id } );
-        this.setState( { openContext: true } );
+        this.setState( {
+            openProduct: id,
+            openContext: true,
+        } );
+
+        this.setState({ componentContext: this.getContext("watch") });
+
+        console.log(this.state)
+    }
+
+    closeContext()
+    {
+        this.setState( {
+            openProduct: false,
+            openContext: false,
+            typeContext: "default"
+        } );
     }
 
     componentDidMount()
@@ -67,9 +119,7 @@ class Passwords extends React.Component
             this.getPasswordsList().then(
                 passwords => this.setState({ originalPasswords: passwords.data.data.map(pass =>
                     <Password
-                        ref={this.test}
                         click={this.openPassword}
-                        openProduct={this.state.openProduct}
                         item={pass.id}
                         key={pass.id}
                         name={pass.name}
@@ -91,7 +141,7 @@ class Passwords extends React.Component
                     </section>
                 </section>
                 <section className="context">
-
+                    { this.state.componentContext }
                 </section>
             </>
         )

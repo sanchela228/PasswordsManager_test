@@ -16,7 +16,10 @@ class Passwords extends \App\Http\Controllers\Controller
 
     public function GetByID(Request $request, $id)
     {
+        $password = \App\Password::find($id);
+        $password->password = \Crypt::decryptString($password->password);
 
+        return response()->json(["data" => $password], 200);
     }
 
     public function List(Request $request)
