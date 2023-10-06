@@ -51,7 +51,7 @@ class Passwords extends \App\Http\Controllers\Controller
     public function List(Request $request)
     {
         return response()->json(
-            ["data" => Password::select('id','name', 'link')->get()],
+            ["data" => Password::select('id','name', 'link', "group_id")->get()],
             200
         );
     }

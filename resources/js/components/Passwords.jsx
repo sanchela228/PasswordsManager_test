@@ -32,6 +32,8 @@ class Passwords extends React.Component
     async getPasswordsList()
     {
         const get = await axios('/web/passwords/list');
+
+        console.log(get.data);
         return await get;
     }
 
@@ -62,6 +64,7 @@ class Passwords extends React.Component
         switch (name)
         {
             case "watch":
+                console.log(" watch - " + this.state.openProduct)
                 return (
                     <WatchContext
                         closeContext={this.closeContext}
@@ -92,14 +95,13 @@ class Passwords extends React.Component
 
     openPassword( id )
     {
+        this.state.openProduct = id;
+
         this.setState( {
-            openProduct: id,
             openContext: true,
         } );
 
         this.setState({ componentContext: this.getContext("watch") });
-
-        console.log(this.state)
     }
 
     closeContext()

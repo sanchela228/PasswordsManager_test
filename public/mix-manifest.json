@@ -4,5 +4,7 @@
     "/js/components/password.js": "/js/components/password.js",
     "/js/components/search.js": "/js/components/search.js",
     "/js/components/watchContext.js": "/js/components/watchContext.js",
+    "/js/components/editContext.js": "/js/components/editContext.js",
+    "/js/components/createContext.js": "/js/components/createContext.js",
     "/css/passwords.css": "/css/passwords.css"
 }
